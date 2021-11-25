@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+    id="report_phieugiaohang_card"
+    model="stock.picking"
+    string="Báo cáo phiếu giao hàng"
+    report_type="qweb-pdf"
+    name="module_nhom1.report_phieugiaohang"
+    file="module_nhom1.report_phieugiaohang"
+/>
+</odoo>

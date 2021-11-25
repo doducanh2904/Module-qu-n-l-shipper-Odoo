@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="nhom1_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context" eval="{'module': 'general_settings', 'bin_size': False}"/>
+        </record>
+        <menuitem id="module_setting"
+                  name="Thiết lập"
+                  action = "nhom1_settings"
+                  parent="setting_root"
+                  sequence="20"/>
+    </data>
+</odoo>
+
+

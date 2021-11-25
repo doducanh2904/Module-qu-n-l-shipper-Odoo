@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mylib_employee_act" model="ir.actions.act_window">
+            <field name="name">Nhân Viên</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('name','!=','')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Thêm Nhân Viên
+                </p>
+            </field>
+        </record>
+        <menuitem id="module_nv"
+                  name="Quản lí Nhân Viên"
+                  action = "mylib_employee_act"
+                  parent="nv_root"
+                  sequence="18"/>
+    </data>
+</odoo>

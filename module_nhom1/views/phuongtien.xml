@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        #Tạo action cho models Phương tiện
+        <record id="phuong_tien_action" model="ir.actions.act_window">
+            <field name="name">DANH SÁCH PHƯƠNG TIỆN</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">phuongtien.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('tinhtrang','in',['chohoatdong','danghoatdong','dangbaotri'])]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new vehicle!
+                </p>
+            </field>
+        </record>
+
+        #Tạo action cho models fields Chờ hoạt động
+        <record id="phuongtien_cho_action" model="ir.actions.act_window">
+            <field name="name">Phương tiện - Chờ hoạt động</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">phuongtien.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[('tinhtrang','=','chohoatdong')]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new vehicle is waiting for the order !
+                </p>
+            </field>
+        </record>
+
+        #Tạo action cho models fields Đang hoạt động
+        <record id="phuongtien_dang_action" model="ir.actions.act_window">
+            <field name="name">Phương tiện - Đang hoạt động</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">phuongtien.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[('tinhtrang','=','danghoatdong')]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new vehicle is delivering !!
+                </p>
+            </field>
+        </record>
+
+        #Tạo view cho model Phương tiện
+        <record id="phuongtien_view" model="ir.ui.view">
+            <field name="name">phuongtien.view</field>
+            <field name="model">phuongtien.nhom1</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class ="oe_title">
+                            <group>
+                                <group>
+                                <h1><field name = "name" readonly ="1"/></h1>
+                                </group>
+                                <group>
+                                    <field name="avatar" string="Hình ảnh xe" widget="image"/>
+                                </group>
+                            </group>
+                        </div>
+                        <div class="body">
+                            <group>
+                                <group>
+                                    <field name ="bienso"/>
+                                    <field name ="loaipt"/>
+                                    <field name ="trongtai"/>
+                                    <field name ="mauxe"/>
+                                </group>
+                                <group>
+                                    <field name ="ngaymua"/>
+                                    <field name ="giamua"/>
+                                    <field name ="diachidk"/>
+                                    <field name ="tinhtrang"/>
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page name="baohiem" string="Bảo hiểm">
+                                <group>
+                                    <group>
+                                        <field name ="mabh"/>
+                                        <field name ="ngaycap"/>
+                                    </group>
+                                    <group>
+                                        <field name ="bh_image" widget="image"/>
+                                    </group>
+                                </group>
+							</page>
+							<page name="history" string="Lịch sử bảo trì">
+                                <group>
+                                        <field name ="history"/>
+                                </group>
+							</page>
+						</notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        #Tạo tree view cho models Phương tiện
+        <record id="phuongtien_tree_view" model="ir.ui.view">
+            <field name="name">phuongtien.view</field>
+            <field name="model">phuongtien.nhom1</field>
+            <field name="arch" type="xml">
+                <tree string="Module" default_order="create_date desc">
+                    <field name="name"/>
+                    <field name ="loaipt"/>
+                    <field name ="trongtai"/>
+                    <field name ="bienso"/>
+                    <field name ="tinhtrang"
+                           widget="badge"
+                           decoration-warning="tinhtrang == 'danghoatdong'"
+                           decoration-danger="tinhtrang == 'dangbaotri'"
+                           decoration-info="tinhtrang == 'chohoatdong'"/>
+                </tree>
+            </field>
+        </record>
+
+        #Tạo search cho tree view của models Phương tiện
+        <record id ="module_search_pt_view" model = "ir.ui.view">
+            <field name="name">phuongtien_view</field>
+            <field name="model">phuongtien.nhom1</field>
+            <field eval="11" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Module Search">
+                    <field name="name" />
+                    <field name ="loaipt"/>
+                    <field name ="trongtai"/>
+                    <field name ="bienso"/>
+                    <field name ="tinhtrang"/>
+                    <field name ="mauxe"/>
+                    <field name ="ngaymua"/>
+                    <group expand='0' string='Filters'>
+                        <filter name="ĐANG_hd_filter" string="Đang hoạt động" domain="[('tinhtrang', '=',  'danghoatdong')]"/>
+                        <filter name="CHO_hd_filter" string="Chờ hoạt động" domain="[('tinhtrang', '=',  'chohoatdong')]"/>
+                        <filter name="BAOTRI_hd_filter" string="Đang bảo trì" domain="[('tinhtrang', '=',  'dangbaotri')]"/>
+                        <filter name="Container_filter" string="Container" domain="[('loaipt', '=',  'container')]"/>
+                        <filter name="Xe_tt_filter" string="Xe tải thùng" domain="[('loaipt', '=',  'xetaithung')]"/>
+                    </group>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Loại phương tiện' name="status_group" context="{'group_by': 'loaipt'}"/>
+                        <filter string='Trọng tải' name="status_group" context="{'group_by': 'trongtai'}"/>
+                        <filter string='Tình trạng' name="status_group" context="{'group_by': 'tinhtrang'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        #Tạo menu cho models Phương tiện
+        <menuitem id="module_phuongtien"
+                   name="Quản lí Phương Tiện"
+                   parent="phuongtien_root"
+                   action = "phuong_tien_action"
+                   sequence="14"/>
+        <menuitem id="phuongtien_ds"
+                   name="Danh sách phương tiện"
+                   parent="module_phuongtien"
+                   action = "phuong_tien_action"
+                   sequence="15"/>
+        <menuitem id="phuongtien_dang"
+                   name="Đang hoạt động"
+                   parent="module_phuongtien"
+                   action = "phuongtien_dang_action"
+                   sequence="16"/>
+        <menuitem id="phuongtien_cho"
+                   name="Chờ hoạt động"
+                   parent="module_phuongtien"
+                   action = "phuongtien_cho_action"
+                   sequence="17"/>
+
+    </data>
+
+    <data>
+
+        #Tạo view cho models Bảo trì
+        <record id="bao_tri_view" model="ir.ui.view">
+            <field name="name">bt.view</field>
+            <field name="model">baotri.nhom1</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                               <field name="name"/>
+                               <field name ="noidung"/>
+                           </group>
+                           <group>
+                               <field name="thoigianth" />
+                               <field name="chiphi" />
+                               <field name="bt_image" />
+                           </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        #Tạo tree view cho models Bảo trì
+        <record id="bao_tri_tree_view" model="ir.ui.view">
+            <field name="name">baotri.view</field>
+            <field name="model">baotri.nhom1</field>
+            <field name="arch" type="xml">
+                <tree string="Module" default_order="create_date desc">
+                        <field name="name"/>
+                        <field name ="thoigianth"/>
+                        <field name ="chiphi"/>
+                </tree>
+            </field>
+        </record>
+
+        #Tạo action cho models Bảo trì
+        <record id="bao_tri_action" model="ir.actions.act_window">
+            <field name="name">LỊCH SỬ BẢO TRÌ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">baotri.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new history!
+                </p>
+            </field>
+        </record>
+<!--        #Tạo menu cho models Phương tiện-->
+<!--        <menuitem id="module_baotri"-->
+<!--                   name="Quản lí lịch sử bảo trì"-->
+<!--                   action = "bao_tri_action"-->
+<!--                   sequence="20"/>-->
+    </data>
+</odoo>

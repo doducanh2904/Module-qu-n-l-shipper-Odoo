@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="shipper_action" model="ir.actions.act_window">
+            <field name="name">DANH SÁCH SHIPPER</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipper.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('trangthai','in',['chogiaohang','danggiaohang'])]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new shipper!
+                </p>
+            </field>
+        </record>
+        <record id="shipper_nhom1_view" model="ir.ui.view">
+            <field name="name">shipper.nhom1.view</field>
+            <field name="model">shipper.nhom1</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class ="oe_title">
+                            <group>
+                                <group>
+                                <h1><field name = "name" readonly ="1"/></h1>
+                                </group>
+                                <group>
+                                    <field name="avatar" string="Avatar" widget="image"/>
+                                </group>
+                            </group>
+                        </div>
+                        <div class ="body">
+                            <group>
+                               <group>
+                                    <field name ="ten"/>
+                                    <field name ="gioitinh"/>
+                                    <field name ="ngaysinh"/>
+                                    <field name ="cmnd"/>
+                               </group>
+                                <group>
+                                    <field name ="covid"/>
+                                    <field name ="datecovid"/>
+                                    <field name ="trangthai"/>
+                                    <field name ="mota"/>
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page name="contact" string="Thông tin liên lạc">
+                                <group>
+                                    <field name="sdt"/>
+                                    <field name ="diachi"/>
+                                    <field name ="emailsp"/>
+                                </group>
+							</page>
+							<page name="license" string="Bằng lái xe">
+								<group>
+									<group>
+										<field name ="idbanglai"/>
+                                        <field name ="hang"/>
+                                        <field name ="ngayhethan"/>
+									</group>
+                                    <group>
+										<field name="imagebanglai" string="Minh chứng" widget="imagebanglai"/>
+									</group>
+								</group>
+							</page>
+                            <page name="health" string="Kiểm tra sức khỏe">
+                                <group>
+                                    <group>
+                                        <field name="suckhoe"/>
+                                    </group>
+                                    <group>
+										<field name="imagesuckhoe" string="Minh chứng" widget="imagesuckhoe"/>
+                                    </group>
+                                </group>
+							</page>
+						</notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="shipper_nhom1_tree_view" model="ir.ui.view">
+            <field name="name">shipper.nhom1.view</field>
+            <field name="model">shipper.nhom1</field>
+            <field name="arch" type="xml">
+                <tree string="Module" default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="ten"/>
+                    <field name="gioitinh"/>
+                    <field name="covid"/>
+                    <field name ="trangthai"
+                           widget="badge"
+                           decoration-warning="trangthai == 'danggiaohang'"
+                           decoration-info="trangthai == 'chogiaohang'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id ="module_search_view" model = "ir.ui.view">
+            <field name="name">module_search_view</field>
+            <field name="model">shipper.nhom1</field>
+            <field eval="10" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Module Search">
+                    <field name="name" />
+                    <field name="ten"/>
+                    <field name ="trangthai"/>
+                    <field name ="gioitinh"/>
+                    <field name ="sdt"/>
+                    <field name ="cmnd"/>
+                    <field name ="idbanglai"/>
+                    <field name="covid"/>
+                    <field name ="hang"/>
+                    <group expand='0' string='Filters'>
+                        <filter name="ĐANG_filter" string="Đang giao hàng" domain="[('trangthai', '=',  'danggiaohang')]"/>
+                        <filter name="CHO_filter" string="Chờ giao hàng" domain="[('trangthai', '=',  'chogiaohang')]"/>
+                        <filter name="Nam_filter" string="Nam" domain="[('gioitinh', '=',  'nam')]"/>
+                        <filter name="Nu_filter" string="Nữ" domain="[('gioitinh', '=',  'nu')]"/>
+                        <filter name="covid_filter" string="Đã tiêm covid" domain="[('covid', '=',  'True')]"/>
+                    </group>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Trạng thái' name="status_group" context="{'group_by': 'trangthai'}"/>
+                        <filter string='Giới tính' name="status_group" context="{'group_by': 'gioitinh'}"/>
+                        <filter string='Covid' name="status_group" context="{'group_by': 'covid'}"/>
+                        <filter string='Hạng' name="status_group" context="{'group_by': 'hang'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="shipper_dang_action" model="ir.actions.act_window">
+            <field name="name">Shipper - Đang giao hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipper.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[('trangthai','=','danggiaohang')]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new shipper is delivering !
+                </p>
+            </field>
+        </record>
+        <record id="shipper_cho_action" model="ir.actions.act_window">
+            <field name="name">Shipper - Chờ đơn hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipper.nhom1</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[('trangthai','=','chogiaohang')]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new shipper is waiting for the order !
+                </p>
+            </field>
+        </record>
+
+
+<!--        Báo cáo pivot -->
+        <record id="shipper_report_action" model="ir.actions.act_window">
+            <field name="name">BÁO CÁO SHIPPER</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipper.nhom1</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+        <record id ="shipper_pivot" model="ir.ui.view">
+            <field name ="name">shipper.pivot</field>
+            <field name ="model">shipper.nhom1</field>
+            <field name ="arch" type="xml">
+                <pivot string ="Shipper - Pivot">
+                </pivot>
+            </field>
+        </record>
+        <record id ="shipper_graph" model="ir.ui.view">
+            <field name ="name">shipper.graph</field>
+            <field name ="model">shipper.nhom1</field>
+            <field name ="arch" type="xml">
+                <graph string ="Shipper - Graph">
+                </graph>
+            </field>
+        </record>
+        <menuitem id="module_root"
+                    name="Vận chuyển"
+                    sequence="0"/>
+
+        <!--Phiếu giao hàng-->
+
+        <menuitem id ="kho_root"
+                  name ="Phiếu giao hàng"
+                  parent= "module_root"
+                  sequence="2"/>
+        <!-- Shipper -->
+        <menuitem id="shipper_root"
+                    name="Shipper"
+                    parent="module_root"
+                    sequence="3"/>
+        <!--Xe-->
+        <menuitem id ="phuongtien_root"
+                  name ="Phương tiện"
+                  parent= "module_root"
+                  sequence="4"/>
+        <!--Nhân viên-->
+        <menuitem id ="nv_root"
+                  name ="Nhân viên"
+                  parent= "module_root"
+                  sequence="5"/>
+<!--        Cấu hình-->
+         <menuitem id ="setting_root"
+                  name ="Cấu hình"
+                  parent= "module_root"
+                  sequence="19"/>
+<!--        Trường shipper-->
+        <menuitem id="module_shipper"
+                   name="Quản lí Shipper"
+                   parent="shipper_root"
+                   action = "shipper_action"
+                   sequence="10"/>
+        <menuitem id="shipper_ds"
+                   name="Danh sách shipper"
+                   parent="module_shipper"
+                   action = "shipper_action"
+                   sequence="11"/>
+        <menuitem id="shipper_dang"
+                   name="Đang giao hàng"
+                   parent="module_shipper"
+                   action = "shipper_dang_action"
+                   sequence="12"/>
+        <menuitem id="shipper_cho"
+                   name="Chờ đơn hàng"
+                   parent="module_shipper"
+                   action = "shipper_cho_action"
+                   sequence="13"/>
+        <menuitem id="baocao_shipper"
+                   name="Báo cáo"
+                   parent="module_shipper"
+                   action = "shipper_report_action"
+                   sequence="20"/>
+
+    </data>
+</odoo>

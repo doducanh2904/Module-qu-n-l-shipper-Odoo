@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_phieugiaohang">
+
+        <t t-call="web.basic_layout">
+            <p>Công ty vinamilk
+                <br>Việt Nam</br>
+                <span class="abcd" style="text-align: center;padding-left: 630px">Nhóm 1 - Lớp 44k21.2</span>
+            </p>
+
+
+            <t t-foreach="docs" t-as="o">
+
+                <hr width="100%"/>
+
+                <div class="a" style="text-align: center;padding-bottom: 100px;padding-top: 0px">
+
+                    <h2>
+                        <h2 style="color:red">BẢN BÁO CÁO PHIẾU GIAO HÀNG</h2>
+                    </h2>
+                </div>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div>
+                        <tr>
+                            <td width="100%">
+                                <table>
+                                    <group>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong style="font-family:Time New Roman">Mã phiếu giao hàng:
+                                                    </strong>
+                                                </span>
+                                            </td>
+                                            <td colspan="6" class="text-center" width="50%">
+                                                <span t-field="o.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong style="font-family:Time New Roman">Địa chỉ giao hàng:
+                                                    </strong>
+                                                </span>
+                                            </td>
+                                            <td colspan="6" class="text-center">
+                                                <span t-field="o.partner_id"/>
+                                            </td>
+                                        </tr>
+                                    </group>
+                                    <group>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong style="font-family:Time New Roman">Kiểu hoạt động:</strong>
+                                                </span>
+                                            </td>
+                                            <td colspan="6" class="text-center">
+                                                <span t-field="o.picking_type_id"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong style="font-family:Time New Roman">Tình trạng phiếu:
+                                                    </strong>
+                                                </span>
+                                            </td>
+                                            <td colspan="6" class="text-center">
+                                                <span t-field="o.tinhtrang_phieu"/>
+                                            </td>
+                                        </tr>
+                                    </group>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Ngày tạo phiếu:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.ngaytao_phieu"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Nhân viên tạo phiếu:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.id_nhanvien_taophieu"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Ngày dự kiến:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.scheduled_date"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Mã nhân viên giao hàng:
+                                                </strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.id_shipper_phieu"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Tên nhân viên giao hàng:
+                                                </strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.ten"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Giới tính:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.gioitinh"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Đã tiêm covid:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.covid"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>
+                                                <strong style="font-family:Time New Roman">Xe giao hàng:</strong>
+                                            </span>
+                                        </td>
+                                        <td colspan="6" class="text-center">
+                                            <span t-field="o.id_xe_phieu"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+                <br/>
+                <div style="padding-left: 150px"></div>
+
+                <t t-if="o.move_ids_without_package">
+                    <span style="font-family:Time New Roman;text-align: center">SẢN PHẨM</span>
+                    <table class="table table-sm o_main_table" name="appointment">
+                        <thead>
+                            <tr>
+                                <th name="product_id" class="text-left">
+                                    <span style="font-family:Time New Roman">Tên sản phẩm</span>
+                                </th>
+                                <th name="product_uom_qty" class="text-left">
+                                    <span style="font-family:Time New Roman">Số lượng</span>
+                                </th>
+                                <th name="forecast_availability" class="text-left">
+                                    <span style="font-family:Time New Roman">Giữ trước</span>
+                                </th>
+                                <th name="quantity_done" class="text-left">
+                                    <span style="font-family:Time New Roman">Hoàn thành</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <t t-set="order_count" t-value="0"/>
+                        <t t-foreach="o.move_ids_without_package" t-as="line">
+                            <t t-set="order_count" t-value="order_count +1"/>
+                            <tr>
+                                <td>
+                                    <span t-field="line.product_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_uom_qty"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.forecast_availability"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.quantity_done"/>
+                                </td>
+
+                            </tr>
+                        </t>
+                    </table>
+                    <hr width="100%"/>
+                </t>
+
+            </t>
+            <div style="padding-bottom: 150px"></div>
+            <hr width="100%"/>
+            <p style="font-family:Time New Roman">Chữ ký nhân viên
+                <span class="baseline" style="text-align: center;padding-left: 250px;font-family:Time New Roman">Chữ ký
+                    shpper
+                </span>
+                <span class="abcd" style="text-align: center;padding-left: 250px;font-family:Time New Roman">Chữ ký
+                    khách hàng
+                </span>
+            </p>
+
+        </t>
+
+    </template>
+</odoo>
